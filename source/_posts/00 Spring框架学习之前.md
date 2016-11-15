@@ -38,11 +38,11 @@ tags:
 ### 官方资料：
 Spring的官网这两年发生了很大的变化，Sping的文档也更新了很多次，现在根据project来区分，对刚入手的人来说很难找对入口!
 
-> **Spring Framework** 这个project为Spring core 对应的文档，是[Spring的基础和核心文档](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/)
+> **Spring Framework** 这个project的文档是[Spring的基础和核心文档](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/)
 
 在将来，这个文档详细说明了Spring的核心原理，但英文文档冗长而没有系统性和原理详解，实例也过于简陋。特此推荐：
 
 > **Spring 3.x企业应用开发实战** 
 > 陈雄华
 
-各大网上商城有售，物超所值！
+非常实在的一本书，对项目过程中可能遇到的绝大部分问题做出了相应的解决方案，让笔者受益良多。
