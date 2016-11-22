@@ -1,5 +1,5 @@
 ---
-title: 01.走进Spring，Context、Bean和IoC
+title: 01 走进Spring，Context、Bean和IoC
 date: 2016-11-21 22:31:42
 categories: 
 - Spring
@@ -7,13 +7,11 @@ tags:
 - learning
 ---
 
-#01 走进Spring，Context、Bean和IoC实战
-
 ## 导语
 > 实践是检验真理的唯一标准。
 
 想了很久不知道怎么开头，但是为了写博客这个动机可以一直保持下去，还是下定决心从头搭建一个工程开始。
-
+<!-- more -->
 ## 一、搭建应用前准备（可先看后面的，再回来搞环境）
 ### 需要具备的知识
 重复一下上一节有讲到的基础：

@@ -1,13 +1,11 @@
 ---
-title: 写在Spring 框架学习之前
+title: 00 写在Spring 框架学习之前
 date: 2016-11-14 21:56:01
 categories: 
 - Spring
 tags:
 - learning
 ---
-# 00 写在Spring 框架学习之前
-***
 ## 导语：
 > 没有什么事情是做不成的，只要你有耐心。
 
@@ -17,7 +15,7 @@ tags:
 * 分享自己的经验心得
 
 由于笔者还在学习的过程中，错误必然会很多，请多指教海涵
-
+<!-- more -->
 ## 一、学习Spring之前所需要的一些基础
 	1. 了解java语言（推荐 java编程思想）
 	2. 了解MAVEN （推荐 MAVEN实战）
