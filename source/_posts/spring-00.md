@@ -6,6 +6,7 @@ categories:
 tags:
 - learning
 ---
+转载请注明来源 [赖赖的博客](http://laiyijie.me)
 ## 导语：
 > 没有什么事情是做不成的，只要你有耐心。
 

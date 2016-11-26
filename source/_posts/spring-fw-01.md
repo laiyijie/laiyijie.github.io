@@ -132,7 +132,7 @@ tags:
 				InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	
-			Class clazz = classLoader.loadClass("me.laiyijie.demo.service.AccountServiceImpl");
+			Class clazz = classLoader.loadClass("me.laiyijie.demo.service.AccountService");
 	
 			Constructor constructor = clazz.getConstructor();
 	
@@ -142,14 +142,14 @@ tags:
 		}
 	}
 	
-没有用到 `new AccountServiceImpl` 却成功创建了他的对象并调用其方法。
+没有用到 `new AccountService` 却成功创建了他的对象并调用其方法。
 
 ##### 调用过程如下
 
 1. 通过Thread获取当前的类加载器（`ClassLoader`）
-2. 通过`ClassLoader`获取`me.laiyijie.demo.service.AccountServiceImpl`对应的`Class`对象
+2. 通过`ClassLoader`获取`me.laiyijie.demo.service.AccountService`对应的`Class`对象
 3. 通过`Class`对象获取构造函数对应的`Constructor`的对象
-4. 通过`Contructor`对象创建`AccountServiceImpl`对象
+4. 通过`Contructor`对象创建`AccountService`对象
 5. 调用`sayHello`方法
 
 > hello

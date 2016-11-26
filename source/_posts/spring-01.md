@@ -6,7 +6,7 @@ categories:
 tags:
 - learning
 ---
-
+转载请注明来源 [赖赖的博客](http://laiyijie.me)
 ## 导语
 > 实践是检验真理的唯一标准。
 

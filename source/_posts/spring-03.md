@@ -6,6 +6,7 @@ categories:
 tags:
 - learning
 ---
+转载请注明来源 [赖赖的博客](http://laiyijie.me)
 ## 导语
 > 你知道的越多，越容易接受新的知识。
 
