@@ -22,7 +22,7 @@ Spring IoC是有应用场景的，其特定决定了应用的结构；也就是�
 https://github.com/laiyijie/SpringLearning
 
 #### 目录结构
-![sayHello](spring-03/sayhello.png)
+![sayHello](spring-04/sayhello.png)
 
 乍一看，工程似乎打出上一次不少，多了好多；然而程序员做事，向来不会毫无章法，自有其中的规律，而其中的规律了解了，文件再多，也只是重复的工作量；
 
