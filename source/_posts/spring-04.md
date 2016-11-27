@@ -28,7 +28,7 @@ https://github.com/laiyijie/SpringLearning
 
 #### 目录结构
 
-![目录结构](spring-03/sayhello.png)
+![目录结构](spring-04/sayhello.png)
 
 #### 运行工程
 运行具有Main函数的 App.java
