@@ -46,7 +46,7 @@ https://github.com/laiyijie/SpringLearning
 	ALTER TABLE `account`
 	  ADD PRIMARY KEY (`username`);
 
-#### 运行工程（与之前不同，请注意）  
+#### 运行工程 
 ##### 运行方式　　
 - 右键App.java
 - Run as
