@@ -1,0 +1,960 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x8F6C;&amp;#x8F7D;&amp;#x8BF7;&amp;#x6CE8;&amp;#x660E;&amp;#x6765;&amp;#x6E90; &amp;#x8D56;&amp;#x8D56;&amp;#x7684;&amp;#x535A;&amp;#x5BA2; &amp;#x5BFC;&amp;#x8BED; &amp;#x6838;&amp;#x5FC3;&amp;#x601D;&amp;#x60F3;&amp;#x660E;&amp;#x4E86;&amp;#xFF0C;&amp;#x9AA8;&amp;#x67B6;&amp;#x5DF2;&amp;#x7E">
+<meta name="keywords" content="learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11 Spring MVC 访问入参获取和拦截器使用（@RequestParam 和 Interceptors）登录模块demo">
+<meta property="og:url" content="http://laiyijie.github.io/2016/12/12/spring-11/index.html">
+<meta property="og:site_name" content="赖赖的博客">
+<meta property="og:description" content="&amp;#x8F6C;&amp;#x8F7D;&amp;#x8BF7;&amp;#x6CE8;&amp;#x660E;&amp;#x6765;&amp;#x6E90; &amp;#x8D56;&amp;#x8D56;&amp;#x7684;&amp;#x535A;&amp;#x5BA2; &amp;#x5BFC;&amp;#x8BED; &amp;#x6838;&amp;#x5FC3;&amp;#x601D;&amp;#x60F3;&amp;#x660E;&amp;#x4E86;&amp;#xFF0C;&amp;#x9AA8;&amp;#x67B6;&amp;#x5DF2;&amp;#x7E">
+<meta property="og:image" content="http://laiyijie.github.io/2016/12/12/spring-11/sayhello.png">
+<meta property="og:image" content="http://laiyijie.github.io/2016/12/12/spring-11/re_0.png">
+<meta property="og:image" content="http://laiyijie.github.io/2016/12/12/spring-11/re_1.png">
+<meta property="og:image" content="http://laiyijie.github.io/2016/12/12/spring-11/re_2.png">
+<meta property="og:updated_time" content="2017-07-12T06:26:43.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="11 Spring MVC 访问入参获取和拦截器使用（@RequestParam 和 Interceptors）登录模块demo">
+<meta name="twitter:description" content="&amp;#x8F6C;&amp;#x8F7D;&amp;#x8BF7;&amp;#x6CE8;&amp;#x660E;&amp;#x6765;&amp;#x6E90; &amp;#x8D56;&amp;#x8D56;&amp;#x7684;&amp;#x535A;&amp;#x5BA2; &amp;#x5BFC;&amp;#x8BED; &amp;#x6838;&amp;#x5FC3;&amp;#x601D;&amp;#x60F3;&amp;#x660E;&amp;#x4E86;&amp;#xFF0C;&amp;#x9AA8;&amp;#x67B6;&amp;#x5DF2;&amp;#x7E">
+<meta name="twitter:image" content="http://laiyijie.github.io/2016/12/12/spring-11/sayhello.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laiyijie.github.io/2016/12/12/spring-11/"/>
+
+
+
+
+
+  <title> 11 Spring MVC 访问入参获取和拦截器使用（@RequestParam 和 Interceptors）登录模块demo | 赖赖的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">赖赖的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://laiyijie.github.io/2016/12/12/spring-11/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="赖赖">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/head.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="赖赖的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="赖赖的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                11 Spring MVC 访问入参获取和拦截器使用（@RequestParam 和 Interceptors）登录模块demo
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-12T19:35:50+08:00">
+              2016-12-12
+            </time>
+
+            &nbsp;|&nbsp;
+
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <time title="Post modified" itemprop="dateModified" datetime="2017-07-12T14:26:43+08:00">
+              2017-07-12
+            </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/12/spring-11/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/12/spring-11/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#x8F6C;&#x8F7D;&#x8BF7;&#x6CE8;&#x660E;&#x6765;&#x6E90; <a href="http://laiyijie.me" target="_blank" rel="external">&#x8D56;&#x8D56;&#x7684;&#x535A;&#x5BA2;</a></p>
+<h2 id="&#x5BFC;&#x8BED;"><a href="#&#x5BFC;&#x8BED;" class="headerlink" title="&#x5BFC;&#x8BED;"></a>&#x5BFC;&#x8BED;</h2><blockquote>
+<p>&#x6838;&#x5FC3;&#x601D;&#x60F3;&#x660E;&#x4E86;&#xFF0C;&#x9AA8;&#x67B6;&#x5DF2;&#x7ECF;&#x5EFA;&#x7ACB;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x4E00;&#x70B9;&#x4E00;&#x70B9;&#x7684;&#x4E30;&#x6EE1;&#x7EC6;&#x8282;&#xFF0C;&#x53CD;&#x54FA;&#x9AA8;&#x67B6;&#x548C;&#x6838;&#x5FC3;&#x601D;&#x60F3;  </p>
+</blockquote>
+<p>&#x524D;&#x9762;&#x4ECB;&#x7ECD;&#x4E86;Spring MVC &#x662F;&#x600E;&#x4E48;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x8BBF;&#x95EE;&#x7684;&#xFF0C;&#x60F3;&#x5FC5;&#x4F60;&#x5DF2;&#x7ECF;&#x660E;&#x767D;&#x4E86;&#x57FA;&#x672C;&#x7684;&#x8BBF;&#x95EE;&#x8FC7;&#x7A0B;&#xFF0C;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5E94;&#x7528;&#x7CFB;&#x7EDF;&#xFF0C;&#x53EF;&#x80FD;&#x767B;&#x5F55;&#x6A21;&#x5757;&#x90FD;&#x5FC5;&#x4E0D;&#x53EF;&#x5C11;&#xFF0C;&#x4E0D;&#x59A8;&#x4ECA;&#x5929;&#x5C31;&#x6765;&#x505A;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x767B;&#x5F55;&#x6A21;&#x5757;&#xFF0C;&#x987A;&#x4FBF;&#x719F;&#x6089;&#x4E00;&#x4E0B;Spring MVC&#x7684;&#x8BBF;&#x95EE;&#x5165;&#x53C2;&#x83B7;&#x53D6;&#x548C;&#x62E6;&#x622A;&#x5668;&#x7684;&#x4F7F;&#x7528;  </p>
+<a id="more"></a>
+<h2 id="&#x5B9E;&#x4F8B;"><a href="#&#x5B9E;&#x4F8B;" class="headerlink" title="&#x5B9E;&#x4F8B;"></a>&#x5B9E;&#x4F8B;</h2><h3 id="&#x9879;&#x76EE;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x548C;&#x4EE3;&#x7801;&#x83B7;&#x53D6;&#x5730;&#x5740;"><a href="#&#x9879;&#x76EE;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x548C;&#x4EE3;&#x7801;&#x83B7;&#x53D6;&#x5730;&#x5740;" class="headerlink" title="&#x9879;&#x76EE;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x548C;&#x4EE3;&#x7801;&#x83B7;&#x53D6;&#x5730;&#x5740;"></a>&#x9879;&#x76EE;&#x5DE5;&#x7A0B;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x548C;&#x4EE3;&#x7801;&#x83B7;&#x53D6;&#x5730;&#x5740;</h3><h4 id="&#x83B7;&#x53D6;&#x5730;&#x5740;&#xFF08;&#x7248;&#x672C;Log&#x5C06;&#x4F1A;&#x6CE8;&#x660E;&#x6BCF;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x5BF9;&#x5E94;&#x7684;&#x8BFE;&#x7A0B;&#xFF09;"><a href="#&#x83B7;&#x53D6;&#x5730;&#x5740;&#xFF08;&#x7248;&#x672C;Log&#x5C06;&#x4F1A;&#x6CE8;&#x660E;&#x6BCF;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x5BF9;&#x5E94;&#x7684;&#x8BFE;&#x7A0B;&#xFF09;" class="headerlink" title="&#x83B7;&#x53D6;&#x5730;&#x5740;&#xFF08;&#x7248;&#x672C;Log&#x5C06;&#x4F1A;&#x6CE8;&#x660E;&#x6BCF;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x5BF9;&#x5E94;&#x7684;&#x8BFE;&#x7A0B;&#xFF09;"></a>&#x83B7;&#x53D6;&#x5730;&#x5740;&#xFF08;&#x7248;&#x672C;Log&#x5C06;&#x4F1A;&#x6CE8;&#x660E;&#x6BCF;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x5BF9;&#x5E94;&#x7684;&#x8BFE;&#x7A0B;&#xFF09;</h4><p><a href="https://github.com/laiyijie/SpringLearning" target="_blank" rel="external">https://github.com/laiyijie/SpringLearning</a></p>
+<h4 id="&#x76EE;&#x5F55;&#x7ED3;&#x6784;"><a href="#&#x76EE;&#x5F55;&#x7ED3;&#x6784;" class="headerlink" title="&#x76EE;&#x5F55;&#x7ED3;&#x6784;"></a>&#x76EE;&#x5F55;&#x7ED3;&#x6784;</h4><p><img src="/2016/12/12/spring-11/sayhello.png" alt="&#x76EE;&#x5F55;&#x7ED3;&#x6784;">  </p>
+<p>&#x5982;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x867D;&#x7136;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x770B;&#x8D77;&#x6765;&#x590D;&#x6742;&#x4E86;&#x4E00;&#x4E9B;&#xFF08;&#x5C31;&#x662F;&#x6587;&#x4EF6;&#x5939;&#x6DF1;&#x5EA6;&#x6DF1;&#x4E86;&#x4E00;&#x70B9;&#x513F;&#x800C;&#x5DF2;&#xFF09;&#xFF0C;&#x5176;&#x5B9E;&#x6700;&#x6E90;&#x6587;&#x4EF6;&#x53EA;&#x6709;<strong>&#x4E94;&#x4E2A;</strong>&#x3002;&#x6240;&#x4EE5;&#x4E0D;&#x8981;&#x7D27;&#x5F20;&#xFF0C;&#x8FD9;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x800C;&#x4E14;&#x76F8;&#x6BD4;&#x4E0A;&#x4E00;&#x8BFE;&#xFF0C;&#x53EA;&#x591A;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x548C;&#x5C11;&#x91CF;&#x7684;&#x914D;&#x7F6E;   </p>
+<h4 id="&#x8FD0;&#x884C;&#x5DE5;&#x7A0B;"><a href="#&#x8FD0;&#x884C;&#x5DE5;&#x7A0B;" class="headerlink" title="&#x8FD0;&#x884C;&#x5DE5;&#x7A0B;"></a>&#x8FD0;&#x884C;&#x5DE5;&#x7A0B;</h4><h5 id="&#x8FD0;&#x884C;&#x65B9;&#x5F0F;"><a href="#&#x8FD0;&#x884C;&#x65B9;&#x5F0F;" class="headerlink" title="&#x8FD0;&#x884C;&#x65B9;&#x5F0F;&#x3000;&#x3000;"></a>&#x8FD0;&#x884C;&#x65B9;&#x5F0F;&#x3000;&#x3000;</h5><ul>
+<li>&#x53F3;&#x952E;<strong>&#x6574;&#x4E2A;&#x9879;&#x76EE;</strong></li>
+<li>Run as</li>
+<li>Run On Server</li>
+<li>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x91CC;&#x4F9D;&#x6B21;&#x8F93;&#x5165;  &#xFF08;demo&#x662F;&#x5DE5;&#x7A0B;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x4F9D;&#x7167;&#x4F60;&#x7684;&#x6765;&#x66FF;&#x6362;&#xFF09; <ul>
+<li><a href="http://localhost:8080/**demo**/user/hi" target="_blank" rel="external">http://localhost:8080/**demo**/user/hi</a></li>
+<li><a href="http://127.0.0.1:8080/**demo**/user/login?username=laiyijie&amp;password=lailai" target="_blank" rel="external">http://127.0.0.1:8080/**demo**/user/login?username=laiyijie&amp;password=lailai</a></li>
+<li><a href="http://127.0.0.1:8080/**demo**/user/hi" target="_blank" rel="external">http://127.0.0.1:8080/**demo**/user/hi</a>  </li>
+</ul>
+</li>
+</ul>
+<h5 id="&#x8FD0;&#x884C;&#x7ED3;&#x679C;"><a href="#&#x8FD0;&#x884C;&#x7ED3;&#x679C;" class="headerlink" title="&#x8FD0;&#x884C;&#x7ED3;&#x679C;"></a>&#x8FD0;&#x884C;&#x7ED3;&#x679C;</h5><ul>
+<li><p><a href="http://localhost:8080/**demo**/user/hi" target="_blank" rel="external">http://localhost:8080/**demo**/user/hi</a><br><img src="/2016/12/12/spring-11/re_0.png" alt="">  </p>
+</li>
+<li><p><a href="http://127.0.0.1:8080/**demo**/user/login?username=laiyijie&amp;password=lailai" target="_blank" rel="external">http://127.0.0.1:8080/**demo**/user/login?username=laiyijie&amp;password=lailai</a><br><img src="/2016/12/12/spring-11/re_1.png" alt="">  </p>
+</li>
+<li><p><a href="http://127.0.0.1:8080/**demo**/user/hi" target="_blank" rel="external">http://127.0.0.1:8080/**demo**/user/hi</a><br><img src="/2016/12/12/spring-11/re_2.png" alt="">  </p>
+</li>
+</ul>
+<p>&#x7B2C;&#x4E00;&#x6B21;&#x548C;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x7684;&#x8F93;&#x5165;&#x662F;&#x5B8C;&#x5168;&#x4E00;&#x6837;&#x7684;&#x786E;&#x5B9E;&#x5B8C;&#x5168;&#x4E0D;&#x540C;&#x7684;&#x4E24;&#x4E2A;&#x7ED3;&#x679C;&#xFF1F;  </p>
+<p>&#x7531;&#x4E8E;&#x7B2C;&#x4E00;&#x6B21;&#x6CA1;&#x6709;&#x767B;&#x5F55;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x7684;&#x662F;<strong>403</strong>&#x6743;&#x9650;&#x4E0D;&#x8DB3;&#xFF0C;&#x7B2C;&#x4E8C;&#x6B21;&#x662F;&#x767B;&#x5F55;&#x4EE5;&#x540E;&#x8BBF;&#x95EE;&#x8FD9;&#x4E2A;&#x94FE;&#x63A5;&#xFF0C;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x8FD4;&#x56DE;&#x3002;  </p>
+<h3 id="&#x9879;&#x76EE;&#x8BE6;&#x89E3;"><a href="#&#x9879;&#x76EE;&#x8BE6;&#x89E3;" class="headerlink" title="&#x9879;&#x76EE;&#x8BE6;&#x89E3;"></a>&#x9879;&#x76EE;&#x8BE6;&#x89E3;</h3><p>&#x4F9D;&#x7167;&#x4E0A;&#x4E00;&#x7AE0;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x8BBF;&#x95EE;&#x4F1A;&#x88AB;&#x5F15;&#x6D41;&#x5230;&#x7531;<code>@RequestMapping</code>&#x6CE8;&#x89E3;&#x7684;&#x51FD;&#x6570;&#x6267;&#x884C;&#xFF0C;&#x6211;&#x4EEC;&#x4E0D;&#x59A8;&#x76F4;&#x63A5;&#x627E;&#x5230;<code>UserController</code>&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x8BBF;&#x95EE;&#x662F;&#x7531;&#x8FD9;&#x4E2A;&#x63A7;&#x5236;&#x5668;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x7684; </p>
+<h4 id="UserController-java&#xFF08;&#x4E0E;&#x4E0A;&#x4E00;&#x8BFE;&#x6709;&#x53D8;&#x5316;&#xFF09;"><a href="#UserController-java&#xFF08;&#x4E0E;&#x4E0A;&#x4E00;&#x8BFE;&#x6709;&#x53D8;&#x5316;&#xFF09;" class="headerlink" title="UserController.java&#xFF08;&#x4E0E;&#x4E0A;&#x4E00;&#x8BFE;&#x6709;&#x53D8;&#x5316;&#xFF09;"></a>UserController.java&#xFF08;&#x4E0E;&#x4E0A;&#x4E00;&#x8BFE;&#x6709;&#x53D8;&#x5316;&#xFF09;</h4><pre><code>package me.laiyijie.demo.controller;
+
+import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+@RequestMapping(&quot;/user&quot;)
+public class UserController {
+
+    @RequestMapping(&quot;/hi&quot;)
+    @ResponseBody
+    public String hello(@RequestParam(value = &quot;name&quot;, defaultValue = &quot;world&quot;) String name) {
+        return &quot;hello &quot; + name;
+    }
+
+    @RequestMapping(&quot;/login&quot;)
+    @ResponseBody
+    public String login(@RequestParam(&quot;username&quot;) String username, @RequestParam(&quot;password&quot;) String password,
+            HttpSession httpsession) {
+        if (&quot;laiyijie&quot;.equals(username) &amp;&amp; &quot;lailai&quot;.equals(password)) {
+            httpsession.setAttribute(&quot;username&quot;, username);
+            return &quot;login success&quot;;
+        }
+        return &quot;loging failed&quot;;
+    }
+
+}  
+</code></pre><p>&#x4EE3;&#x7801;&#x6709;&#x51E0;&#x5904;&#x53D8;&#x5316;&#xFF1A;  </p>
+<ul>
+<li>&#x5728;&#x7C7B;&#x524D;&#x9762;&#x591A;&#x4E86;&#x4E00;&#x4E2A;<code>@RequestMapping</code>&#x6CE8;&#x89E3;&#xFF0C;&#x6839;&#x636E;&#x524D;&#x9762;&#x7684;&#x6267;&#x884C;&#x7ED3;&#x679C;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5982;&#x679C;<code>@RequestMapping</code>&#x6CE8;&#x89E3;&#x5E94;&#x7528;&#x5230;&#x7C7B;&#x4E0A;&#xFF0C;&#x90A3;&#x4E48;<strong>&#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x7684;URL&#x90FD;&#x589E;&#x52A0;&#x8FD9;&#x4E2A;&#x6CE8;&#x89E3;&#x7684;&#x524D;&#x7F00;</strong>&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x90FD;&#x589E;&#x52A0;&#x4E86; <code>/user</code>&#xFF0C;&#x6240;&#x4EE5;&#x539F;&#x6765;&#x7684;<code>/hi</code>&#x53D8;&#x6210;&#x4E86;<code>/user/hi</code>  </li>
+<li>&#x5728;&#x65B9;&#x6CD5;&#x53C2;&#x6570;&#x4E2D;&#x589E;&#x52A0;&#x4E86;&#x7531;<code>@RequestParam</code>&#x6807;&#x6CE8;&#x7684;&#x5165;&#x53C2;&#xFF0C;&#x8BE5;&#x53C2;&#x6570;&#x5C31;&#x662F;&#x6620;&#x5C04;&#x5165;&#x53C2;  <ul>
+<li>&#x5728;&#x7B2C;&#x4E8C;&#x6B21;&#x8BBF;&#x95EE;&#x7684;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x7684;URL&#x4E3A;<code>127.0.0.1/demo/user/login?username=laiyijie&amp;password=lailai</code> &#x800C;&#x5176;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x58F0;&#x660E;&#x6709;&#x5982;&#x4E0B;&#x4E24;&#x4E2A;&#x53C2;&#x6570;<code>@RequestParam(&quot;username&quot;) String username, @RequestParam(&quot;password&quot;) String password</code> </li>
+<li>&#x663E;&#x800C;&#x6613;&#x89C1;&#x7684;&#xFF0C;<code>@RequestParam</code>&#x83B7;&#x53D6;&#x4E86;&#x95EE;&#x53F7;&#x540E;&#x9762;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x53C2;&#x6570;  </li>
+<li>&#x5728;<code>hi</code>&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4E2D;&#x6211;&#x4EEC;&#x8FD9;&#x6837;&#x4F7F;&#x7528;<code>@RequestParam(value = &quot;name&quot;, defaultValue = &quot;world&quot;) String name</code> &#x8BBE;&#x7F6E;&#x4E86;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x5373;&#x4F7F;&#x6211;&#x4EEC;&#x4E0D;&#x4F20;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x4E5F;&#x4F1A;&#x8FD4;&#x56DE; <code>hello world</code>&#xFF08;&#x4F8B;&#x5982;&#x7B2C;&#x4E09;&#x6B21;&#x8BBF;&#x95EE;&#xFF09;  </li>
+</ul>
+</li>
+<li><code>login</code>&#x51FD;&#x6570;&#x4E2D;&#x65B0;&#x589E;&#x4E86;&#x4E00;&#x4E2A;<code>HttpSession</code>&#x7684;&#x5165;&#x53C2;  <ul>
+<li>&#x9996;&#x5148;&#xFF0C;&#x8FD9;&#x4E2A;&#x5165;&#x53C2;&#x4ECE;&#x4F55;&#x800C;&#x6765;&#xFF1F;&#x8FD9;&#x662F;SpringMVC&#x5728;&#x4F7F;&#x7528;<code>DispatcherServlet</code>&#x5206;&#x914D;URL&#x5BF9;&#x5E94;&#x63A7;&#x5236;&#x5668;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x6839;&#x636E;&#x51FD;&#x6570;&#x58F0;&#x660E;&#x81EA;&#x52A8;&#x6CE8;&#x5165;&#x7684;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x76F8;&#x5E94;&#x7684;&#x8FD8;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-ann-methods" target="_blank" rel="external">&#x5B98;&#x65B9;&#x6587;&#x6863;</a>  </li>
+<li>&#x4F5C;&#x7528;&#x5F88;&#x7B80;&#x5355;&#x5C31;&#x662F;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x7684;<code>HttpSession</code>&#x4ECE;&#x800C;&#x53EF;&#x4EE5;&#x64CD;&#x4F5C;<code>Session</code>&#x4E2D;&#x7684;&#x5C5E;&#x6027;&#xFF08;Session&#x5728;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#x4E2D;&#x662F;&#x4E3A;&#x4E86;&#x4FDD;&#x5B58;&#x767B;&#x5F55;&#x72B6;&#x6001;&#xFF09;</li>
+</ul>
+</li>
+<li><code>login</code>&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5728;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;&#x6B63;&#x786E;&#x4EE5;&#x540E;&#x9664;&#x4E86;&#x4F1A;&#x8FD4;&#x56DE;<code>login success</code>&#x4EE5;&#x5916;&#x8FD8;&#x4F1A;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;<code>username</code>&#x7684;<code>Session</code>&#x5C5E;&#x6027;&#x7528;&#x6765;&#x8BC1;&#x660E;&#x767B;&#x5F55;&#x6210;&#x529F;  </li>
+</ul>
+<p>&#x90A3;&#x4E48;&#x95EE;&#x9898;&#x6765;&#x4E86;&#xFF0C;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x8BBF;&#x95EE;<code>/uesr/hi</code>&#x7684;&#x65F6;&#x5019;&#x662F;&#x600E;&#x4E48;&#x4F1A;&#x8FD4;&#x56DE;<code>403</code>&#x9519;&#x8BEF;&#x7684;&#x5462;&#xFF1F;  </p>
+<p>&#x8FD9;&#x5C31;&#x8981;&#x5F15;&#x5165;Spring MVC&#x7684;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7EC4;&#x4EF6;&#xFF0C;<strong>&#x62E6;&#x622A;&#x5668;</strong>&#xFF08;Interceptor&#xFF09;  </p>
+<h4 id="LoginInterceptor-java&#xFF08;&#x65B0;&#x589E;&#xFF09;"><a href="#LoginInterceptor-java&#xFF08;&#x65B0;&#x589E;&#xFF09;" class="headerlink" title="LoginInterceptor.java&#xFF08;&#x65B0;&#x589E;&#xFF09;"></a>LoginInterceptor.java&#xFF08;&#x65B0;&#x589E;&#xFF09;</h4><pre><code>package me.laiyijie.demo.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+public class LoginInterceptor implements HandlerInterceptor {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        String username = (String) request.getSession().getAttribute(&quot;username&quot;);
+        if (username != null) {
+            return true;
+        }else{
+            response.sendError(403);
+            return false;
+        }
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+
+    }
+
+}
+</code></pre><p>&#x4E0D;&#x7528;&#x770B;&#x8FD9;&#x4E48;&#x591A;&#x4EE3;&#x7801;&#xFF0C;&#x5176;&#x5B9E;&#x5C31;&#x4E24;&#x70B9;&#xFF1A;  </p>
+<ul>
+<li>&#x5B9E;&#x73B0;&#x4E86;<code>HandlerInterceptor</code>&#x63A5;&#x53E3;  </li>
+<li>&#x5199;&#x4E86;<code>preHandle</code>&#x65B9;&#x6CD5;&#xFF08;&#x6B64;&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x5728;&#x5206;&#x914D;&#x7ED9;<code>Controller</code>&#x4E4B;&#x524D;&#x6267;&#x884C;&#xFF0C;&#x5F53;&#x540C;&#x610F;&#x7EE7;&#x7EED;&#x8BBF;&#x95EE;&#x7684;&#x65F6;&#x5019;&#x8FD4;&#x56DE;<code>true</code>&#x5426;&#x5219;&#x8FD4;&#x56DE;<code>false</code>&#xFF09;<ul>
+<li>&#x9996;&#x5148;&#x83B7;&#x53D6;&#x4E86;<code>Session</code>&#x7684;<code>username</code>&#x5C5E;&#x6027;<ul>
+<li>String username = (String) request.getSession().getAttribute(&#x201C;username&#x201D;);</li>
+</ul>
+</li>
+<li>&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x8BBE;&#x7F6E;&#x4E86;&#xFF08;&#x4EE3;&#x8868;&#x5904;&#x4E8E;&#x767B;&#x5F55;&#x72B6;&#x6001;&#xFF09;&#x8FD4;&#x56DE;<code>true</code>&#x7EE7;&#x7EED;&#x6267;&#x884C;<ul>
+<li>return true;</li>
+</ul>
+</li>
+<li>&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#xFF08;&#x4EE3;&#x8868;&#x6CA1;&#x6709;&#x767B;&#x5F55;&#xFF09;&#x8BBE;&#x7F6E;&#x8FD4;&#x56DE;<code>403</code>&#x9519;&#x8BEF;&#x5E76;&#x4E14;&#x8FD4;&#x56DE;<code>false</code>  <ul>
+<li>response.sendError(403);</li>
+<li>return false;  </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>&#x662F;&#x4E0D;&#x662F;&#x5F88;&#x7B80;&#x5355;&#xFF1F;&#x770B;&#x4E86;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;&#x5176;&#x5B9E;&#x5C31;&#x53EF;&#x4EE5;&#x660E;&#x767D;&#x62E6;&#x622A;&#x5668;&#x5904;&#x4E8E;&#x7684;&#x4F4D;&#x7F6E;&#xFF1A;  </p>
+<ul>
+<li><code>/demo/user/hi</code>&#x8BBF;&#x95EE;&#x88AB;<code>/demo</code>&#x63A5;&#x53D7;</li>
+<li>&#x5982;&#x679C;&#x5B9A;&#x4E49;&#x4E86;&#x62E6;&#x622A;&#x5668;&#x5219;&#x8FDB;&#x5165;&#x62E6;&#x622A;&#x5668;&#x5904;&#x7406;&#xFF08;<code>preHandel</code>&#x65B9;&#x6CD5;&#xFF09;</li>
+<li>&#x8FD4;&#x56DE;true&#x5219;&#x7EE7;&#x7EED;&#x5206;&#x53D1;&#x7ED9;<code>/user/hi</code>&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;<code>hi</code>&#x5426;&#x5219;&#x8FD4;&#x56DE;&#x9519;&#x8BEF;  </li>
+</ul>
+<p>&#x90A3;&#x4E48;&#x53C8;&#x6709;&#x4E00;&#x4E2A;&#x65B0;&#x95EE;&#x9898;&#x6765;&#x4E86;&#xFF0C;<code>/user/login</code>&#x4E3A;&#x4EC0;&#x4E48;&#x6CA1;&#x6709;&#x88AB;&#x62E6;&#x622A;&#xFF1F;&#x4E3A;&#x4EC0;&#x4E48;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;<code>403</code>&#x9519;&#x8BEF;&#xFF1F;</p>
+<p>&#x90A3;&#x5C31;&#x8981;&#x770B;<code>Interceptor</code>&#x7684;&#x914D;&#x7F6E;&#x4E86;&#xFF1A;  </p>
+<h4 id="servlet-context-xml&#xFF08;&#x65B0;&#x589E;&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;&#xFF09;"><a href="#servlet-context-xml&#xFF08;&#x65B0;&#x589E;&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;&#xFF09;" class="headerlink" title="servlet-context.xml&#xFF08;&#x65B0;&#x589E;&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;&#xFF09;"></a>servlet-context.xml&#xFF08;&#x65B0;&#x589E;&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;&#xFF09;</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd&quot;&gt;
+
+
+    &lt;context:component-scan base-package=&quot;me.laiyijie.demo&quot; /&gt;
+
+    &lt;mvc:annotation-driven /&gt;
+
+    &lt;bean
+        class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;
+        p:messageConverters-ref=&quot;stringHttpMessageConverter&quot; /&gt;
+
+    &lt;bean id=&quot;stringHttpMessageConverter&quot;
+        class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot; /&gt;
+
+    &lt;mvc:interceptors&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;mvc:mapping path=&quot;/**&quot; /&gt;
+            &lt;mvc:exclude-mapping path=&quot;/user/login&quot; /&gt;
+            &lt;bean class=&quot;me.laiyijie.demo.controller.LoginInterceptor&quot;&gt;&lt;/bean&gt;
+        &lt;/mvc:interceptor&gt;
+    &lt;/mvc:interceptors&gt;
+
+&lt;/beans&gt;
+</code></pre><p>&#x62E6;&#x622A;&#x5668;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF08;&#x76F8;&#x6BD4;&#x4E0A;&#x8282;&#x8BFE;&#x65B0;&#x589E;&#xFF09;&#xFF1A;  </p>
+<pre><code>&lt;mvc:interceptors&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/**&quot; /&gt;
+        &lt;mvc:exclude-mapping path=&quot;/user/login&quot; /&gt;
+        &lt;bean class=&quot;me.laiyijie.demo.controller.LoginInterceptor&quot;&gt;&lt;/bean&gt;
+    &lt;/mvc:interceptor&gt;
+&lt;/mvc:interceptors&gt;
+</code></pre><ul>
+<li>&#x9996;&#x5148;&#x914D;&#x7F6E;&#x4E86;&#x4E00;&#x4E2A;<code>interceptors</code>&#x4E5F;&#x5C31;&#x662F;&#x62E6;&#x622A;&#x5668;&#x7EC4;&#xFF08;&#x5BF9;&#xFF0C;&#x91CC;&#x9762;&#x53EF;&#x4EE5;&#x6709;&#x5F88;&#x591A;&#x4E2A;&#x62E6;&#x622A;&#x5668;&#xFF09;</li>
+<li>&#x7136;&#x540E;&#x914D;&#x7F6E;&#x4E86;&#x91CC;&#x9762;&#x7684;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;<code>interceptor</code><ul>
+<li>&#x62E6;&#x622A;&#x6240;&#x6709;&#x8FDB;&#x5165;<code>/demo</code>&#x7684;&#x8BBF;&#x95EE;<ul>
+<li><mvc:mapping path="/**"></mvc:mapping></li>
+<li>&#x4E3A;&#x4F55;&#x6709;&#x4E24;&#x4E2A;*&#xFF1F;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;*&#x4E0D;&#x53EF;&#x4EE5;&#x4EE3;&#x8868;<code>/xx/xx</code>&#x53EA;&#x80FD;&#x4EE3;&#x8868;<code>/xx</code></li>
+</ul>
+</li>
+<li>&#x6392;&#x9664;&#x4E0D;&#x9700;&#x8981;&#x62E6;&#x622A;&#x7684;&#x8DEF;&#x5F84;&#xFF08;&#x539F;&#x6765;&#x5728;&#x8FD9;&#x91CC;&#x6392;&#x9664;&#x4E86;<code>/user/login</code>&#xFF09;  <ul>
+<li><mvc:exclude-mapping path="/user/login"> </mvc:exclude-mapping></li>
+</ul>
+</li>
+<li>&#x8BBE;&#x7F6E;&#x5BF9;&#x5E94;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;  </li>
+</ul>
+</li>
+</ul>
+<p>&#x7B80;&#x5355;&#x7684;&#x4E24;&#x4E2A;&#x529F;&#x80FD;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x767B;&#x5F55;&#x6A21;&#x5757;&#x3002;  </p>
+<h3 id="&#x5C0F;&#x7ED3;"><a href="#&#x5C0F;&#x7ED3;" class="headerlink" title="&#x5C0F;&#x7ED3;"></a>&#x5C0F;&#x7ED3;</h3><ul>
+<li><code>@RequstMapping</code>&#x53EF;&#x4EE5;&#x5728;&#x7C7B;&#x524D;&#x6CE8;&#x91CA;&#xFF0C;&#x4EE3;&#x8868;&#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x6240;&#x6709;&#x5904;&#x7406;&#x51FD;&#x6570;&#x90FD;&#x8981;&#x5E26;&#x5176;&#x6807;&#x6CE8;&#x7684;&#x4E00;&#x4E2A;&#x524D;&#x7F00;  </li>
+<li><code>@RequestParam</code>&#x5728;<code>Controller</code>&#x5904;&#x7406;&#x51FD;&#x6570;&#x7684;&#x5165;&#x53C2;&#x524D;&#x6CE8;&#x91CA;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x4F8B;&#x5982;<code>?username=laiyijie&amp;password=lailai</code>&#x8FD9;&#x6837;&#x7684;&#x53C2;&#x6570;&#x7ED1;&#x5B9A;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x5165;&#x53C2;&#x4E2D;</li>
+<li><code>@RequestParam</code>&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x8FD9;&#x6837;&#x5373;&#x4F7F;&#x8BBF;&#x95EE;&#x4E0D;&#x5E26;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x4E5F;&#x53EF;&#x4EE5;&#x6709;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x7684;&#x8F93;&#x5165;&#xFF0C;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x662F;<code>@RequestParam(defaultValue=&quot;xxx&quot;)</code> </li>
+<li><code>Controller</code>&#x4E2D;&#x7684;&#x5904;&#x7406;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x589E;&#x52A0;<code>HttpSession</code>&#x7684;&#x5165;&#x53C2;&#xFF0C;&#x7531;<code>DispatcherServlet</code>&#x81EA;&#x52A8;&#x6CE8;&#x5165;&#xFF0C;&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x7684;&#x5C5E;&#x6027;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#mvc-ann-methods" target="_blank" rel="external">&#x5B98;&#x65B9;&#x6587;&#x6863;</a>  </li>
+<li><code>&#x62E6;&#x622A;&#x5668;</code>&#x901A;&#x8FC7;&#x7EE7;&#x627F;<code>HandlerInterceptor</code>&#x63A5;&#x53E3;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;<code>&lt;mvc:interceptor&gt;</code>&#x914D;&#x7F6E;&#x5B9E;&#x73B0;</li>
+<li>&#x62E6;&#x622A;&#x5668;&#x6709;&#x4E09;&#x4E2A;&#x94A9;&#x5B50;&#xFF0C;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x662F;&#x5728;&#x8BBF;&#x95EE;&#x8FDB;&#x5165;<code>Controller</code>&#x4E4B;&#x524D;&#x5904;&#x7406;&#xFF08;<code>preHandle</code>&#xFF09;&#xFF0C;&#x5904;&#x7406;&#x7ED3;&#x679C;&#x4E3A;false&#x53EF;&#x4EE5;&#x963B;&#x6B62;&#x5176;&#x8FDB;&#x5165;<code>Controller</code>&#x4E2D;&#x5904;&#x7406;  </li>
+<li>&#x62E6;&#x622A;&#x5668;&#x53EF;&#x4EE5;&#x914D;&#x7F6E;&#x5176;&#x62E6;&#x622A;&#x7684;&#x8DEF;&#x5F84;&#xFF08;<code>&lt;mvc:mapping path=&quot;/**&quot; /&gt;</code>&#xFF09;</li>
+<li>&#x62E6;&#x622A;&#x5668;&#x53EF;&#x4EE5;&#x6392;&#x9664;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x7684;&#x8DEF;&#x5F84;&#x4E0D;&#x8FDB;&#x884C;&#x62E6;&#x622A;&#xFF08;<code>&lt;mvc:exclude-mapping path=&quot;/user/login&quot; /&gt;</code>&#xFF09;</li>
+</ul>
+<h3 id="&#x9644;&#xFF1A;"><a href="#&#x9644;&#xFF1A;" class="headerlink" title="&#x9644;&#xFF1A;"></a>&#x9644;&#xFF1A;</h3><h4 id="pom-xml&#xFF08;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4F9D;&#x8D56;&#xFF09;"><a href="#pom-xml&#xFF08;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4F9D;&#x8D56;&#xFF09;" class="headerlink" title="pom.xml&#xFF08;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4F9D;&#x8D56;&#xFF09;"></a>pom.xml&#xFF08;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4F9D;&#x8D56;&#xFF09;</h4><pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;me.laiyijie&lt;/groupId&gt;
+    &lt;artifactId&gt;demo&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+        &lt;maven.compiler.compilerVersion&gt;1.8&lt;/maven.compiler.compilerVersion&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+
+        &lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
+            &lt;version&gt;4.3.2.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+            &lt;version&gt;4.3.2.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;3.1.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</code></pre><p>&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x4F9D;&#x8D56;<code>javax.servlet-api</code>&#x4F5C;&#x7528;&#x4E8E;&#x4E3A;<code>provided</code>&#xFF0C;&#x7531;&#x5BB9;&#x5668;&#x63D0;&#x4F9B;  </p>
+<h4 id="web-xml&#xFF08;&#x65E0;&#x53D8;&#x5316;&#xFF09;"><a href="#web-xml&#xFF08;&#x65E0;&#x53D8;&#x5316;&#xFF09;" class="headerlink" title="web.xml&#xFF08;&#x65E0;&#x53D8;&#x5316;&#xFF09;"></a>web.xml&#xFF08;&#x65E0;&#x53D8;&#x5316;&#xFF09;</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee 
+                http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;
+    version=&quot;3.1&quot; xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;&gt;
+
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+            &lt;param-value&gt;/WEB-INF/spring/appServlet/servlet-context.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+
+&lt;/web-app&gt;
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/learning/" rel="tag"># learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/08/spring-10/" rel="next" title="10 Spring MVC 的一次访问（基础入门篇）">
+                <i class="fa fa-chevron-left"></i> 10 Spring MVC 的一次访问（基础入门篇）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/13/spring-accesslog-filter/" rel="prev" title="在SpringMVC中打印完整的AccessLog">
+                在SpringMVC中打印完整的AccessLog <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/12/spring-11/"
+           data-title="11 Spring MVC 访问入参获取和拦截器使用（@RequestParam 和 Interceptors）登录模块demo" data-url="http://laiyijie.github.io/2016/12/12/spring-11/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/head.png"
+               alt="赖赖" />
+          <p class="site-author-name" itemprop="name">赖赖</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导语"><span class="nav-number">1.</span> <span class="nav-text">导语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目工程目录结构和代码获取地址"><span class="nav-number">2.1.</span> <span class="nav-text">项目工程目录结构和代码获取地址</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取地址（版本Log将会注明每一个版本对应的课程）"><span class="nav-number">2.1.1.</span> <span class="nav-text">获取地址（版本Log将会注明每一个版本对应的课程）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录结构"><span class="nav-number">2.1.2.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行工程"><span class="nav-number">2.1.3.</span> <span class="nav-text">运行工程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#运行方式"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">运行方式　　</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#运行结果"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">运行结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目详解"><span class="nav-number">2.2.</span> <span class="nav-text">项目详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UserController-java（与上一课有变化）"><span class="nav-number">2.2.1.</span> <span class="nav-text">UserController.java（与上一课有变化）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LoginInterceptor-java（新增）"><span class="nav-number">2.2.2.</span> <span class="nav-text">LoginInterceptor.java（新增）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet-context-xml（新增拦截器配置）"><span class="nav-number">2.2.3.</span> <span class="nav-text">servlet-context.xml（新增拦截器配置）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">2.3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附："><span class="nav-number">2.4.</span> <span class="nav-text">附：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pom-xml（新增一个依赖）"><span class="nav-number">2.4.1.</span> <span class="nav-text">pom.xml（新增一个依赖）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#web-xml（无变化）"><span class="nav-number">2.4.2.</span> <span class="nav-text">web.xml（无变化）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖赖</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laiyijie"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
