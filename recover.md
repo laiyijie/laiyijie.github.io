@@ -6,3 +6,4 @@
 2. npm install
 3. npm install hexo-asset-image --save
 4. 
+
