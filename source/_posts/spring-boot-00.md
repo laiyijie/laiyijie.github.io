@@ -1,5 +1,5 @@
 ---
-title: b00 写在 Spring Boot 学习之前
+title: spring-boot-00 写在 Spring Boot 学习之前
 date: 2017-07-19 14:30:17
 categories: 
 - Spring
@@ -15,7 +15,7 @@ tags:
 
 在前面的一些部分介绍了Spring Framwork的一些基本概念（IoC AOP）和基本的配置，以及其一些基本原理。那些是学习Spring Boot的基础，你有必要知道前面的一些基础知识，有利于使用Spring Boot，如果没有Spring的基础，建议可以先学习前面的课程。
 
-后面以bxx开头的文章将介绍Spring Boot
+后面以spring-boot-开头的文章将介绍Spring Boot
 
 <!-- more -->
 
