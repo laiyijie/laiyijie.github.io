@@ -138,6 +138,72 @@ Main函数只有一行代码！
 2. @EnableAutoConfiguration
 3. @ComponentScan
 
-这样解释的话，就简单很多了！
+这样分解后，就简单很多了！
 
-@Configuration是Spring采用JavaConfig方式的一个注解，在当前示例中，并没有什么用
+**@Configuration** 是Spring采用JavaConfig方式的一个注解，在当前示例中，并没用，你可以去掉这个注解再次运行，例子，发现结果一致
+
+**@ComponentScan** 其实就是打开了注解配置Spring的方式，也就是相当于xml文件中的
+
+	<context:annotation-config/>
+
+而**@EnableAutoConfiguration** 就是我们说的Spring Boot的**核心之一**，开启自动配置的注解
+
+那么这个注解有什么用呢？
+在当前的工程中，就是完成了我们之前说的两件事情
+
+1. 启动了一个tomcat
+2. 配置了项目相应的 web.xml并放入tomcat当中运行
+
+其实**@EnableAutoConfiguration**不仅仅如当前工程这么简单，它是灵活的、自适应的，我们将在下个章节具体讲述他的作用。
+
+接下来我们看下pom.xml文件：
+
+#### pom.xml
+
+	<?xml version="1.0" encoding="UTF-8"?>
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+    
+        <groupId>me.laiyijie</groupId>
+        <artifactId>spring-boot-learning</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    
+        <parent>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-parent</artifactId>
+            <version>1.5.4.RELEASE</version>
+        </parent>
+    
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+            </dependency>
+        </dependencies>
+    
+    </project>
+
+核心区域有两个地方
+
+##### parent 
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.4.RELEASE</version>
+    </parent>
+
+这里继承了 spring-boot-starter-parent 
+
+##### dependency
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+这里使用了spring-boot-starter-web
+
+在入门篇不赘述，我们将在后续章节详细解释这些pom文件的区别、关系和使用方式
